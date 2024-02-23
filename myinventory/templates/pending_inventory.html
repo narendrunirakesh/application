@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pending Inventory Items</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        li:hover {
+            background-color: #f0f0f0;
+        }
+
+        button[type="submit"] {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px; /* Added margin to separate buttons */
+        }
+
+        button[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .approved {
+            background-color: #28a745; /* Green color */
+        }
+
+    </style>
+</head>
+<body>
+    <h2>Pending Inventory Items</h2>
+    <ul>
+        {% for item in pending_items %}
+        <li>
+            {{ item.product_name }} - Quantity: {{ item.quantity }} 
+            <div class="button-group">
+                <form id="approve-form-{{ item.id }}" method="post" action="{% url 'approve_inventory_item' item.id %}">
+                    {% csrf_token %}
+                    <button id="approve-btn-{{ item.id }}" type="submit">Approve</button>
+                </form>
+                <form method="post" action="{% url 'remove_inventory' item.id %}">
+                    {% csrf_token %}
+                    <button type="submit">Remove</button>
+                </form>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <script>
+        // JavaScript code to change button text to "Approved" after clicking
+        {% for item in pending_items %}
+            document.getElementById('approve-form-{{ item.id }}').addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+                var approveBtn = document.getElementById('approve-btn-{{ item.id }}');
+                approveBtn.innerHTML = 'Approved';
+                approveBtn.classList.add('approved');
+                approveBtn.disabled = true; // Disable button after approval
+                this.submit(); // Submit the form
+            });
+        {% endfor %}
+    </script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Inventory Item</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Change Inventory Item</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label for="product_name">Product Name:</label><br>
+        <input type="text" id="product_name" name="product_name" value="{{ item.product_name }}"><br>
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" name="quantity" value="{{ item.quantity }}"><br>
+        <label for="mrp">Mrp:</label><br>
+        <input type="number" id="mrp" name="mrp" value="{{ item.mrp }}"><br>
+        <label for="product_name">Vendor:</label><br>
+        <input type="text" id="vendor" name="vendor" value="{{ item.vendor }}"><br>
+        <label for="batch_num">Batch Number:</label><br>
+        <input type="text" id="batch_num" name="batch_num" value="{{ item.batch_num }}"><br>
+        <label for="batch_date">Batch Number:</label><br>
+        <input type="date" id="batch_date" name="batch_date" value="{{ item.batch_date }}"><br>
+        <label for="status">Status:</label><br>
+        <input type="text" id="status" name="status" value="{{ item.status }}"><br>
+        <button type="submit">Update Item</button>
+    </form>
+</body>
+</html>
